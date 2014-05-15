@@ -2,7 +2,7 @@
 /*
 Plugin Name: Links For Logged
 Plugin URL: 
-Description: Add a link only for logged users to a text widget with a shortcode.
+Description: Add a link only for logged users to any widget with a shortcode.
 Version: 0.1
 Author: Janne Kähkönen
 Author URI: 
@@ -18,7 +18,7 @@ Usage:
 add_filter('widget_text', 'do_shortcode');
 
 // Show or hide the links.
-function lfl_show_links_to_logged($atts)
+function show_links_function( $atts )
 {
     // Get WP installation folder.
     $WP_PATH = implode("/", (explode("/", $_SERVER["PHP_SELF"], -1)));
@@ -39,17 +39,17 @@ function lfl_show_links_to_logged($atts)
     else
     {
         // Unregister widget(s).
-        function lfl_unregister_default_widgets()
+        function unregister_default_widgets()
         {
             unregister_widget('WP_Widget_Text');
         }
 
         // Return nothing, remove widget(s).
-        add_action('widgets_init', 'lfl_unregister_default_widgets', 0);
+        add_action('widgets_init', 'unregister_default_widgets', 11);
     }
 }
 
 // Add the shortcode.
-add_shortcode('link_for_logged', 'lfl_show_links_to_logged');
+add_shortcode('link_for_logged', 'show_links_function');
 
 ?>
