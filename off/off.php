@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Off
-Plugin URL: 
+Plugin URL:
 Description:
-Version: 0.0.1
-Author: 
-Author URI: 
+Version: 0.1
+Author:
+Author URI:
 Contributors:
 */
 
@@ -13,7 +13,7 @@ function redirect()
 {
     // static page home
     if(is_front_page()) {
-        //header( 'Location:  http://localhost/likioma01/events/' ) ;
+        //header('Location: <URL>') ;
     }
     if(is_home()) {
     }
