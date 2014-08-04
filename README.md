@@ -1,6 +1,6 @@
 Links For Logged
 ================
-A simple WordPress plugin to add links for the **logged users only** to a text wiget in a sidebar.
+A simple WordPress plugin to add links for **the logged users only** to a text wiget in a sidebar.
 
 Usage:
 ------
