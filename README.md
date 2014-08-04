@@ -1,7 +1,6 @@
 Links For Logged
 ================
-A WordPress plugin to add links to a page or to an external URL by shortcode for **the logged users only** to a text widget.
-
+A WordPress plugin to add hyperlinks as a shorcode for **the logged in users** to a Text Widget.
 Usage:
 ------
 `[link_for_logged page="<page title>" title="<title>" size="<p|h1|h2|h3|h4|h5>"]`
