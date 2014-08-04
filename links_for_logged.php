@@ -7,7 +7,7 @@ Version: 0.1
 Author: Janne Kähkönen
 Author URI: http://koti.tamk.fi/~c1jkahko/
 Text Domain: links-for-logged
-License: GPL2
+License: GPLv2 or later
 
 Copyright 2014  Janne Kähkönen  (email : jannekahkonen@gmail.com)
 
@@ -24,6 +24,7 @@ Copyright 2014  Janne Kähkönen  (email : jannekahkonen@gmail.com)
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
+
 class WordPressLinksForLoggedPlugin
 {
     /** 
@@ -45,33 +46,30 @@ class WordPressLinksForLoggedPlugin
      *
      */
     function show_links_for_logged($params)
-    {   
-        $default_title = __('Untitled', 'links-for-logged');
-
-        $a = shortcode_atts(
-                 array(
-                     'page'  => '',
-                     'url'   => '',
-                     'title' =>  $default_title,
-                     'size'  => 'p'
-                 ), $params
-             );
-
+    {
         if (is_user_logged_in())
-        {
+        {   
+            $a = shortcode_atts(
+                     array(
+                         'page'  => '',
+                         'url'   => '',
+                         'title' =>  __('Untitled', 'links-for-logged'),
+                         'size'  => 'p'
+                     ), $params
+                 );
+
             if ($a['page'] !== '')
             {
-                $page = get_page_by_title(strtolower($a['page']));
+                $page = get_page_by_title($a['page']);
 
                 if (is_null($page))
                 {
                     return __('INCORRECT PAGE TITLE!', 'links-for-logged');
                 }
-                else if (!is_null($page))
-                {   
-                    $permalink = get_permalink($page->ID);
-
-                    return '<' . $a['size'] . '><a href="' . $permalink .
+                else
+                {
+                    return '<' . $a['size'] . '><a href="' . 
+                           get_permalink($page->ID) .
                            '">' . $a['title'] .
                            '</a></' . $a['size'] . '>';
                 }
