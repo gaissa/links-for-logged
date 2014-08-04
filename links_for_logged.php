@@ -71,16 +71,16 @@ class WordPressLinksForLoggedPlugin
                 {   
                     $permalink = get_permalink($page->ID);
 
-                    return "<".$a['size']."><a href='" . $permalink .
-                           "'>" . $a['title'] .
-                           "</a></".$a['size'].">";
+                    return '<' . $a['size'] . '><a href="' . $permalink .
+                           '">' . $a['title'] .
+                           '</a></' . $a['size'] . '>';
                 }
             }
             else if ($a['url'] !== '')
             {
-                return "<".$a['size']."><a href='" . $a['url'] .
-                       "'>" . $a['title'] .
-                       "</a></".$a['size'].">";
+                return '<' . $a['size'] . '><a href="' . $a['url'] .
+                       '">' . $a['title'] .
+                       '</a></' . $a['size'] . '>';
             }
         }
     }
