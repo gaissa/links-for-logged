@@ -6,6 +6,7 @@ Description: Add a link for logged users to a text widget via shortcode.
 Version: 0.1
 Author: Janne Kähkönen
 Author URI: http://koti.tamk.fi/~c1jkahko/
+Text Domain: links-for-logged
 License: GPL2
 
 Copyright 2014  Janne Kähkönen  (email : jannekahkonen@gmail.com)
@@ -25,7 +26,6 @@ Copyright 2014  Janne Kähkönen  (email : jannekahkonen@gmail.com)
 */
 class WordPressLinksForLoggedPlugin
 {
-
     /** 
      * The constructor.
      *
@@ -45,12 +45,14 @@ class WordPressLinksForLoggedPlugin
      *
      */
     function show_links_for_logged($params)
-    {
+    {   
+        $default_title = __('Untitled', 'links-for-logged');
+
         $a = shortcode_atts(
                  array(
                      'page'  => '',
                      'url'   => '',
-                     'title' => 'Untitled',
+                     'title' =>  $default_title,
                      'size'  => 'p'
                  ), $params
              );
@@ -63,7 +65,7 @@ class WordPressLinksForLoggedPlugin
 
                 if (is_null($page))
                 {
-                    return "INCORRECT PAGE TITLE!";
+                    return __('INCORRECT PAGE TITLE!', 'links-for-logged');
                 }
                 else if (!is_null($page))
                 {   
