@@ -6,49 +6,83 @@ Description: Add a link for logged users to a text widget via shortcode.
 Version: 0.1
 Author: Janne Kähkönen
 Author URI: http://koti.tamk.fi/~c1jkahko/
+License: GPL2
 
-Usage:
-    [link_for_logged page="<page>" title="<title>" size="<p|h1|h2|h3|h4|h5>"]
-    [link_for_logged url="<url>" title="<title>" size="<p|h1|h2|h3|h4|h5>"]
+Copyright 2014  Janne Kähkönen  (email : jannekahkonen@gmail.com)
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License, version 2, as 
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
-// Tell WP to register the shortcode to the widgets.
-add_filter('widget_text', 'do_shortcode');
-
-// Show or hide the links.
-function lfl_show_links_to_logged($atts)
+class WordPressLinksForLoggedPlugin
 {
-    // Get WP installation folder.
-    $WP_PATH = implode("/", (explode("/", $_SERVER["PHP_SELF"], -1)));
 
-    $a = shortcode_atts(
-         array(
-               'page'  => '',
-               'url'   => '',
-               'title' => 'Untitled',
-               'size'  => 'p'
-    ), $atts );
-
-    // If any user is logged in.
-    if (is_user_logged_in())
+    /** 
+     * The constructor.
+     *
+     */
+    function __construct()
     {
-        // Return WP page.
-        if ($a['page'] !== "")
+        add_shortcode('link_for_logged', array($this, 'show_links_for_logged'));
+        add_filter('widget_text', 'do_shortcode');
+    }
+
+    /** 
+     * Show the links for the logged users.
+     * 
+     * @param array $params The shorcode parameters.
+     *
+     * @return string
+     *
+     */
+    function show_links_for_logged($params)
+    {
+        $a = shortcode_atts(
+                 array(
+                     'page'  => '',
+                     'url'   => '',
+                     'title' => 'Untitled',
+                     'size'  => 'p'
+                 ), $params
+             );
+
+        if (is_user_logged_in())
         {
-            return "<".$a['size']." align='center'><a href='" . $WP_PATH .
-                   "/" . $a['page'] . "'>" . $a['title'] .
-                   "</a></".$a['size'].">";
-        }
-        // Return external URL.
-        else if ($a['url'] !== "")
-        {
-            return "<".$a['size']." align='center'><a href='" . $a['url'] .
-                   "'>" . $a['title'] . "</a></".$a['size'].">";
+            if ($a['page'] !== '')
+            {
+                $page = get_page_by_title(strtolower($a['page']));
+
+                if (is_null($page))
+                {
+                    return "INCORRECT PAGE TITLE!";
+                }
+                else if (!is_null($page))
+                {   
+                    $permalink = get_permalink($page->ID);
+
+                    return "<".$a['size']."><a href='" . $permalink .
+                           "'>" . $a['title'] .
+                           "</a></".$a['size'].">";
+                }
+            }
+            else if ($a['url'] !== '')
+            {
+                return "<".$a['size']."><a href='" . $a['url'] .
+                       "'>" . $a['title'] .
+                       "</a></".$a['size'].">";
+            }
         }
     }
 }
-
-// Add the shortcode.
-add_shortcode('link_for_logged', 'lfl_show_links_to_logged');
+new WordPressLinksForLoggedPlugin();
 
 ?>
