@@ -15,12 +15,6 @@ Usage:
 // Tell WP to register the shortcode to the widgets.
 add_filter('widget_text', 'do_shortcode');
 
-// Unregister widget(s).
-function lfl_unregister_default_widgets()
-{
-    unregister_widget('WP_Widget_Text');
-}
-
 // Show or hide the links.
 function lfl_show_links_to_logged($atts)
 {
@@ -51,11 +45,6 @@ function lfl_show_links_to_logged($atts)
             return "<".$a['size']." align='center'><a href='" . $a['url'] .
                    "'>" . $a['title'] . "</a></".$a['size'].">";
         }
-    }
-    else
-    {
-        // Return nothing, remove widget.
-        add_action('widgets_init', 'lfl_unregister_default_widgets', 0);
     }
 }
 
