@@ -1,12 +1,11 @@
 <?php
 /*
 Plugin Name: Links For Logged
-Plugin URL: 
+Plugin URL: https://github.com/sugardrunk/WP-Links-For-Logged-Plugin/
 Description: Add a link for logged users to a text widget via shortcode.
 Version: 0.1
 Author: Janne Kähkönen
-Author URI: 
-Contributors:
+Author URI: http://koti.tamk.fi/~c1jkahko/
 
 Usage:
     [link_for_logged page="<page>" title="<title>" size="<p|h1|h2|h3|h4|h5>"]
