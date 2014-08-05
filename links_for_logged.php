@@ -8,7 +8,9 @@ Author: Janne Kähkönen
 Author URI: http://koti.tamk.fi/~c1jkahko/
 Text Domain: links-for-logged
 License: GPLv2 or later
+*/
 
+/*
 Copyright 2014  Janne Kähkönen  (email : jannekahkonen@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
@@ -24,7 +26,6 @@ Copyright 2014  Janne Kähkönen  (email : jannekahkonen@gmail.com)
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
-
 class WordPressLinksForLoggedPlugin
 {
     /** 
@@ -33,12 +34,12 @@ class WordPressLinksForLoggedPlugin
      */
     function __construct()
     {
-        add_shortcode('link_for_logged', array($this, 'show_links_for_logged'));
+        add_shortcode('link', array($this, 'show_links_for_logged'));
         add_filter('widget_text', 'do_shortcode');
     }
 
     /** 
-     * Show the links for the logged users.
+     * Show the links for the logged in users.
      * 
      * @param array $params The shorcode parameters.
      *
