@@ -39,22 +39,57 @@ class WordPressLinksForLoggedPlugin
     }
 
     /** 
-     * Validate the url
+     * Show the link for post or a page.
+     * 
+     * @param string $type Type of the request.
+     * @param array $a The shortcode parameters.
      *
-     * @param string $url The URL to be validated.
-     *
-     * @return boolean
+     * @return string
      *
      */
-    function validate_url($url)
+    function show_page_or_post($type, $a)
     {
-        if(filter_var($url, FILTER_VALIDATE_URL))
+        if ($a[$type] !== '')
         {
-            return true;
+            $page = get_page_by_title($a[$type], OBJECT, $type);
+
+            if (is_null($page))
+            {
+                return '<' . $a['size'] . '>' .
+                       __('incorrect title!', 'links-for-logged') .
+                       '</' . $a['size'] . '>';
+            }
+            else
+            {
+                return '<' . $a['size'] . '><a href="' . 
+                       get_permalink($page->ID) .
+                       '">' . $a['title'] .
+                       '</a></' . $a['size'] . '>';
+            }
+        }
+    }
+
+    /** 
+     * Show the link for URL.
+     * 
+     * @param array $a The shortcode parameters.
+     *
+     * @return string
+     *
+     */
+    function show_url($a)
+    {
+        if (filter_var($a['url'], FILTER_VALIDATE_URL))
+        {
+            return '<' . $a['size'] . '>' .
+                   __('incorrect url!', 'links-for-logged') .
+                   '</' . $a['size'] . '>';
         }
         else
         {
-            return false;
+            return '<' . $a['size'] . '><a href="' . $a['url'] .
+                   '">' . $a['title'] .
+                   '</a></' . $a['size'] . '>';
         }
     }
 
@@ -73,6 +108,7 @@ class WordPressLinksForLoggedPlugin
             $a = shortcode_atts(
                      array(
                          'page'  => '',
+                         'post'  => '',
                          'url'   => '',
                          'title' =>  __('Untitled', 'links-for-logged'),
                          'size'  => 'p'
@@ -81,33 +117,17 @@ class WordPressLinksForLoggedPlugin
 
             if ($a['page'] !== '')
             {
-                $page = get_page_by_title($a['page']);
-
-                if (is_null($page))
-                {
-                    return __('INCORRECT PAGE TITLE!', 'links-for-logged') .
-                              '<br>';
-                }
-                else
-                {
-                    return '<' . $a['size'] . '><a href="' . 
-                           get_permalink($page->ID) .
-                           '">' . $a['title'] .
-                           '</a></' . $a['size'] . '>';
-                }
+                echo $this->show_page_or_post('page', $a);
             }
+
+            else if ($a['post'] !== '')
+            {
+                 echo $this->show_page_or_post('post', $a);
+            }
+
             else if ($a['url'] !== '')
             {
-                if ($this->validate_url($a['url']) === true)
-                {
-                    return '<' . $a['size'] . '><a href="' . $a['url'] .
-                           '">' . $a['title'] .
-                           '</a></' . $a['size'] . '>';
-                }
-                else
-                {
-                    return __('INCORRECT URL!', 'links-for-logged') . '<br>';
-                }
+                echo $this->show_url($a);
             }
         }
     }

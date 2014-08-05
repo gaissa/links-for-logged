@@ -5,5 +5,6 @@ Usage:
 ------
 `[link page="<page title>" title="<title>" size="<p|h1|h2|h3|h4|h5>"]`
 
+`[link post="<post title>" title="<title>" size="<p|h1|h2|h3|h4|h5>"]`
 
 `[link url="<external url>" title="<title>" size="<p|h1|h2|h3|h4|h5>"]`
