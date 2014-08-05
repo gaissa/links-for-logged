@@ -39,6 +39,26 @@ class WordPressLinksForLoggedPlugin
     }
 
     /** 
+     * Validate the url
+     *
+     * @param string $url The URL to be validated.
+     *
+     * @return boolean
+     *
+     */
+    function validate_url($url)
+    {
+        if(filter_var($url, FILTER_VALIDATE_URL))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /** 
      * Show the links for the logged in users.
      * 
      * @param array $params The shorcode parameters.
@@ -65,7 +85,8 @@ class WordPressLinksForLoggedPlugin
 
                 if (is_null($page))
                 {
-                    return __('INCORRECT PAGE TITLE!', 'links-for-logged');
+                    return __('INCORRECT PAGE TITLE!', 'links-for-logged') .
+                              '<br>';
                 }
                 else
                 {
@@ -77,9 +98,16 @@ class WordPressLinksForLoggedPlugin
             }
             else if ($a['url'] !== '')
             {
-                return '<' . $a['size'] . '><a href="' . $a['url'] .
-                       '">' . $a['title'] .
-                       '</a></' . $a['size'] . '>';
+                if ($this->validate_url($a['url']) === true)
+                {
+                    return '<' . $a['size'] . '><a href="' . $a['url'] .
+                           '">' . $a['title'] .
+                           '</a></' . $a['size'] . '>';
+                }
+                else
+                {
+                    return __('INCORRECT URL!', 'links-for-logged') . '<br>';
+                }
             }
         }
     }
