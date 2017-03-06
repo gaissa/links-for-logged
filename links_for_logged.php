@@ -5,7 +5,7 @@ Plugin URI: https://github.com/sugardrunk/WP-Links-For-Logged-Plugin/
 Description: Add a link for logged users to a text widget via shortcode.
 Version: 0.1
 Author: Janne Kähkönen
-Author URI: http://koti.tamk.fi/~c1jkahko/
+Author URI: https://github.com/gaissa
 Text Domain: links-for-logged
 License: GPLv2 or later
 */
